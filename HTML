@@ -1,88 +1,89 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biotecnologia em Tratamento de Doenças</title>
+    <title>Busque Ajuda</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #ffcccb; /* Cor salmão morango */
-            color: #333;
-        }
-        header {
-            background-color: #d35400; /* Laranja mais escuro */
-            color: white;
-            padding: 20px 0;
             text-align: center;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
         }
         .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 20px;
+            max-width: 600px;
+            margin: auto;
             background: white;
+            padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        h1 {
-            margin-bottom: 10px;
+        .red {
+            color: red;
         }
-        h2 {
-            color: #d35400; /* Laranja mais escuro */
-        }
-        ul {
-            list-style-type: square;
-            padding-left: 20px;
-        }
-        footer {
-            text-align: center;
-            padding: 10px 0;
-            background-color: #d35400;
+        .opcoes button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: #007bff;
             color: white;
-            position: relative;
-            bottom: 0;
-            width: 100%;
+        }
+        .opcoes button.selected {
+            background-color: #0056b3;
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-
-<header>
-    <h1>Biotecnologia em Tratamento de Doenças</h1>
-</header>
-
-<div class="container">
-    <h2>O que é Biotecnologia?</h2>
-    <p>A biotecnologia é uma área multidisciplinar que utiliza organismos vivos ou partes deles para desenvolver produtos e processos. Ela desempenha um papel essencial no desenvolvimento de tratamentos inovadores para diversas doenças.</p>
-
-    <h2>Aplicações da Biotecnologia na Saúde</h2>
-    <ul>
-        <li>
-            <strong>Terapia Gênica:</strong> Técnicas que visam tratar ou prevenir doenças, inserindo genes terapêuticos no organismo do paciente.
-        </li>
-        <li>
-            <strong>Vacinas de DNA:</strong> Uso de material genético para induzir uma resposta imunológica, proporcionando proteção contra doenças infecciosas.
-        </li>
-        <li>
-            <strong>Medicamentos Biológicos:</strong> Desenvolvimento de proteínas e anticorpos que podem tratar doenças como câncer e artrite reumatoide.
-        </li>
-        <li>
-            <strong>Células-Tronco:</strong> Uso de células-tronco para regeneração de tecidos danificados e tratamento de doenças degenerativas.
-        </li>
-        <li>
-            <strong>Diagnóstico Molecular:</strong> Testes avançados que identificam doenças em estágios iniciais, permitindo tratamentos mais eficazes.
-        </li>
-    </ul>
-
-    <h2>Desafios e Futuro da Biotecnologia</h2>
-    <p>Embora a biotecnologia tenha o potencial de revolucionar a medicina, existem desafios éticos e regulatórios que precisam ser enfrentados. O futuro da biotecnologia dependerá da pesquisa contínua e da colaboração entre cientistas, médicos e formuladores de políticas.</p>
-</div>
-
-<footer>
-    <p>&copy; 2024 - Biotecnologia e Saúde</p>
-</footer>
-
+    <div class="container">
+        <header>
+            <h1><span class="red">B</span>USQUE <span class="red">A</span>JUDA. <span class="red">C</span>OM</h1>
+        </header>
+        <section class="atendimento">
+            <h2>Como prefere ser atendido?</h2>
+            <div class="opcoes">
+                <button class="opcao" id="remoto">Remoto</button>
+                <button class="opcao" id="presencial">Presencial</button>
+            </div>
+            <div id="local-container" class="hidden">
+                <input type="text" placeholder="Escolha o local" id="local">
+            </div>
+        </section>
+        <section class="tipo">
+            <h2>Qual tipo de atendimento?</h2>
+            <div class="opcoes">
+                <button class="opcao" id="medico">Médico</button>
+                <button class="opcao" id="psiquiatra">Psiquiatra</button>
+                <button class="opcao" id="psicologo">Psicólogo</button>
+            </div>
+        </section>
+        <section class="horario">
+            <h2>Horário da consulta:</h2>
+            <input type="time" id="horario">
+        </section>
+        <section class="contato">
+            <h2>DISQUE <span class="red">188</span> para <span class="red">APOIO IMEDIATO</span> 24 horas</h2>
+        </section>
+    </div>
+    <script>
+        document.querySelectorAll('.opcao').forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.id === 'presencial') {
+                    document.getElementById('local-container').classList.remove('hidden');
+                } else if (button.id === 'remoto') {
+                    document.getElementById('local-container').classList.add('hidden');
+                }
+                button.classList.toggle('selected');
+            });
+        });
+    </script>
 </body>
 </html>
