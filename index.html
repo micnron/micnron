@@ -3,139 +3,152 @@
 <head>
   <meta charset="UTF-8">
   <title>Checklist de Traços dos Mobs – WorldBox</title>
+  <!-- Importando fontes do Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    /* Reset e configurações básicas */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #34495e;
+      --accent-color: #e74c3c;
+      --bg-color: #fdfdfd;
+      --card-bg: #ffffff;
+      --header-bg: linear-gradient(135deg, #4caf50, #2e7d32);
+      --font-base: 20px;
+      --transition-speed: 0.3s;
     }
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f5f5f5;
-      color: #333;
+      font-family: 'Open Sans', sans-serif;
+      font-size: var(--font-base);
+      background-color: var(--bg-color);
+      color: var(--primary-color);
       line-height: 1.6;
+      margin: 0;
       padding: 1rem;
-      transition: background-color 0.3s, color 0.3s;
+      transition: background-color var(--transition-speed), color var(--transition-speed), font-size var(--transition-speed);
     }
     body.dark {
-      background-color: #222;
-      color: #ddd;
+      --bg-color: #1b1b1b;
+      --card-bg: #2a2a2a;
+      --primary-color: #e0e0e0;
     }
     header {
-      background-color: #4CAF50;
+      background: var(--header-bg);
       color: #fff;
-      padding: 1rem;
+      padding: 2rem;
       text-align: center;
-      margin-bottom: 1rem;
+      border-radius: 5px;
+      margin-bottom: 2rem;
+    }
+    header h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
     }
     nav {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      gap: 0.8rem;
     }
-    .menu, .acessibilidade {
+    .nav-group {
       display: flex;
       gap: 0.5rem;
       flex-wrap: wrap;
+      align-items: center;
     }
-    .menu button,
-    .acessibilidade button {
-      background-color: #4CAF50;
+    nav button {
+      background-color: var(--secondary-color);
       color: #fff;
       border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 3px;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
       cursor: pointer;
       transition: background-color 0.2s;
     }
-    .menu button:hover,
-    .acessibilidade button:hover {
-      background-color: #45a049;
+    nav button:hover {
+      background-color: var(--accent-color);
     }
     .container {
       max-width: 960px;
       margin: 0 auto;
-      background-color: #fff;
-      padding: 1rem 2rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      background-color: var(--card-bg);
+      padding: 2rem;
       border-radius: 5px;
-      transition: background-color 0.3s, color 0.3s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: background-color var(--transition-speed), color var(--transition-speed);
     }
-    body.dark .container {
-      background-color: #333;
-      color: #ddd;
-    }
-    h1, h2 {
-      margin-bottom: 1rem;
+    .instrucao {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
     }
     h2 {
-      border-bottom: 2px solid #4CAF50;
-      padding-bottom: 0.5rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
       margin-top: 2rem;
-    }
-    p.instrucao {
-      margin-bottom: 1.5rem;
-      font-size: 1rem;
-    }
-    .trait {
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 1rem;
       margin-bottom: 1rem;
-      background-color: #fafafa;
-      position: relative;
-      transition: background-color 0.3s;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 0.5rem;
     }
-    body.dark .trait {
-      background-color: #444;
-      border-color: #555;
+    /* Card de traço */
+    .trait {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1.2rem;
+      margin-bottom: 1.2rem;
+      background-color: var(--card-bg);
+      transition: background-color var(--transition-speed), transform 0.2s;
+      cursor: pointer;
+    }
+    .trait:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     }
     .trait.clicked {
       animation: flash 0.4s ease-out;
     }
     @keyframes flash {
       0% { background-color: #ffffcc; }
-      100% { background-color: inherit; }
+      100% { background-color: var(--card-bg); }
     }
     .trait-header {
       display: flex;
       align-items: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
     }
     .trait-header input[type="checkbox"] {
-      margin-right: 0.75rem;
-      transform: scale(1.2);
+      margin-right: 0.8rem;
+      transform: scale(1.3);
       cursor: pointer;
     }
     .trait-header label {
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 1.1rem;
       cursor: pointer;
     }
     .trait-details {
-      margin-left: 1.9rem;
-      font-size: 0.9rem;
+      margin-left: 2.2rem;
+      font-size: 1rem;
     }
     .trait-details p {
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.5rem;
     }
     .conquista {
-      color: #E91E63;
+      color: var(--accent-color);
       font-style: italic;
     }
-    /* Controles de fonte */
-    .font-controls {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-    }
+    /* Botões de controle de fonte */
     .font-controls span {
-      font-size: 0.9rem;
+      font-size: 1.1rem;
+      margin-right: 0.4rem;
     }
     @media (max-width: 600px) {
-      .trait-details { margin-left: 1.5rem; }
-      nav { flex-direction: column; gap: 0.5rem; }
+      nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .trait-details {
+        margin-left: 1.5rem;
+      }
     }
   </style>
 </head>
@@ -144,19 +157,18 @@
     <h1>Checklist de Traços dos Mobs – WorldBox</h1>
   </header>
 
-  <!-- Menu de Filtro e Acessibilidade -->
   <nav>
-    <div class="menu">
+    <div class="nav-group filtro">
       <button data-filter="todos">Todos</button>
-      <button data-filter="corpo">Traços de Corpo</button>
-      <button data-filter="mente">Traços de Mente</button>
-      <button data-filter="espirito">Traços de Espírito</button>
-      <button data-filter="adquiridos">Traços Adquiridos</button>
-      <button data-filter="divertidos">Traços Divertidos</button>
-      <button data-filter="miscelaneos">Traços Miscelâneos</button>
-      <button data-filter="especiais">Traços Especiais</button>
+      <button data-filter="corpo">Corpo</button>
+      <button data-filter="mente">Mente</button>
+      <button data-filter="espirito">Espírito</button>
+      <button data-filter="adquiridos">Adquiridos</button>
+      <button data-filter="divertidos">Divertidos</button>
+      <button data-filter="miscelaneos">Miscelâneos</button>
+      <button data-filter="especiais">Especiais</button>
     </div>
-    <div class="acessibilidade">
+    <div class="nav-group acessibilidade">
       <button id="toggle-dark">Modo Escuro</button>
       <div class="font-controls">
         <span>Fonte:</span>
@@ -168,11 +180,10 @@
 
   <div class="container" id="trait-container">
     <p class="instrucao">
-      Abaixo segue uma lista (organizada por categoria) com os nomes dos traços (características) dos mobs em WorldBox – traduzidos para o português – e, quando o traço só pode ser obtido através de uma conquista, uma indicação de como fazer essa conquista.
-      <br><em>Lembre-se que muitos traços surgem naturalmente (por spawn ou herança) e que usar o Trait Editor (via Debug Menu) para “forçar” um traço não conta para as conquistas.</em>
+      Abaixo segue uma lista (organizada por categoria) com os nomes dos traços (características) dos mobs em WorldBox – traduzidos para o português – e, quando o traço só pode ser obtido através de uma conquista, uma indicação de como fazer essa conquista.<br>
+      <em>Lembre-se: muitos traços surgem naturalmente (por spawn ou herança) e usar o Trait Editor (via Debug Menu) para “forçar” um traço não conta para as conquistas.</em>
     </p>
-
-    <!-- Cada traço possui um atributo data-category -->
+    
     <!-- 1. Traços de Corpo -->
     <h2>1. Traços de Corpo</h2>
     
@@ -183,7 +194,7 @@
       </div>
       <div class="trait-details">
         <p><strong>Efeito:</strong> Ao morrer, o mob solta ácido em partículas.</p>
-        <p><strong>Desbloqueio:</strong> Exclusivo se vc completar a conquista <span class="conquista">"Let's not"</span> – use o poder de ácido para que criaturas morram soltando ácido.</p>
+        <p><strong>Desbloqueio:</strong> Exclusivo se vc completar a conquista <span class="conquista">"Let's not"</span>.</p>
       </div>
     </div>
     
@@ -209,9 +220,6 @@
       </div>
     </div>
     
-    <!-- (Outros traços de corpo – veja lista completa no exemplo anterior, cada um com data-category="corpo") -->
-    <!-- Apenas alguns exemplos para demonstrar -->
-    
     <div class="trait" data-category="corpo">
       <div class="trait-header">
         <input type="checkbox" id="agil">
@@ -234,7 +242,7 @@
       </div>
     </div>
     
-    <!-- Continue com os demais traços de corpo... -->
+    <!-- (Adicione os demais traços de Corpo conforme listado) -->
     
     <!-- 2. Traços de Mente -->
     <h2>2. Traços de Mente</h2>
@@ -261,7 +269,7 @@
       </div>
     </div>
     
-    <!-- Continue com os demais traços de mente... -->
+    <!-- (Adicione os demais traços de Mente conforme listado) -->
     
     <!-- 3. Traços de Espírito -->
     <h2>3. Traços de Espírito</h2>
@@ -273,11 +281,11 @@
       </div>
       <div class="trait-details">
         <p><strong>Efeito:</strong> Aumenta agressividade em combate, mas diminui lealdade e diplomacia.</p>
-        <p><strong>Desbloqueio:</strong> Exclusivo se vc completar <span class="conquista">"The Demon"</span> – o mob deve matar dragões, magos e reis.</p>
+        <p><strong>Desbloqueio:</strong> Exclusivo se vc completar <span class="conquista">"The Demon"</span>.</p>
       </div>
     </div>
     
-    <!-- Continue com os demais traços de espírito... -->
+    <!-- (Adicione os demais traços de Espírito conforme listado) -->
     
     <!-- 4. Traços Adquiridos -->
     <h2>4. Traços Adquiridos</h2>
@@ -289,11 +297,22 @@
       </div>
       <div class="trait-details">
         <p><strong>Efeito:</strong> Aumenta dano, saúde, velocidade e outros atributos positivos.</p>
-        <p><strong>Desbloqueio:</strong> Concedido ao aplicar o poder de bênção no mob.</p>
+        <p><strong>Desbloqueio:</strong> Concedido ao aplicar o poder de bênção.</p>
       </div>
     </div>
     
-    <!-- Continue com os demais traços adquiridos... -->
+    <div class="trait" data-category="adquiridos">
+      <div class="trait-header">
+        <input type="checkbox" id="aleijado">
+        <label for="aleijado">Aleijado</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Reduz velocidade e ataque.</p>
+        <p><strong>Desbloqueio:</strong> Adquirido após danos intensos em batalhas.</p>
+      </div>
+    </div>
+    
+    <!-- (Adicione os demais traços Adquiridos conforme listado) -->
     
     <!-- 5. Traços Divertidos -->
     <h2>5. Traços Divertidos</h2>
@@ -305,7 +324,7 @@
       </div>
       <div class="trait-details">
         <p><strong>Efeito:</strong> O mob lança explosivos ocasionalmente.</p>
-        <p><strong>Desbloqueio:</strong> Pode ocorrer naturalmente ou via poderes.</p>
+        <p><strong>Desbloqueio:</strong> Natural ou via poderes.</p>
       </div>
     </div>
     
@@ -319,7 +338,7 @@
       </div>
       <div class="trait-details">
         <p><strong>Efeito:</strong> Deixa rastros de flores onde o mob passa.</p>
-        <p><strong>Desbloqueio:</strong> Natural em mobs místicos (ex.: fadas ou druidas).</p>
+        <p><strong>Desbloqueio:</strong> Natural em mobs místicos.</p>
       </div>
     </div>
     
@@ -332,7 +351,7 @@
         <label for="barco">Barco</label>
       </div>
       <div class="trait-details">
-        <p><strong>Efeito:</strong> Exclusivo de objetos do tipo barco; impede certos traços opostos.</p>
+        <p><strong>Efeito:</strong> Exclusivo de barcos; impede certos traços opostos.</p>
         <p><strong>Desbloqueio:</strong> Presente automaticamente.</p>
       </div>
     </div>
@@ -348,32 +367,62 @@
       </div>
     </div>
     
-    <!-- Final da lista -->
-    <p style="margin-top: 2rem; font-size: 0.8rem; color: #777;">
-      * Se um traço é desbloqueado por conquista, siga as condições descritas para obtê‑lo de forma natural, sem usar o Trait Editor.
+    <div class="trait" data-category="especiais">
+      <div class="trait-header">
+        <input type="checkbox" id="rato-rei-ratos">
+        <label for="rato-rei-ratos">Rato / Rei dos Ratos</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Relacionado a infestações; atrai muitos ratos.</p>
+        <p><strong>Desbloqueio:</strong> Surge naturalmente em áreas com muitos ratos.</p>
+      </div>
+    </div>
+    
+    <div class="trait" data-category="especiais">
+      <div class="trait-header">
+        <input type="checkbox" id="cicatriz-divindade">
+        <label for="cicatriz-divindade">Cicatriz da Divindade</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Impede que certos traços (necessários para "Rei dos Reis") sejam contados.</p>
+        <p><strong>Desbloqueio:</strong> Concedida automaticamente se vc usar o Trait Editor.</p>
+      </div>
+    </div>
+    
+    <div class="trait" data-category="especiais">
+      <div class="trait-header">
+        <input type="checkbox" id="zumbi">
+        <label for="zumbi">Zumbi</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Transforma o mob em zumbi, com alterações visuais e de status.</p>
+        <p><strong>Desbloqueio:</strong> Exclusivo ao usar o poder “Zombie Infection”.</p>
+      </div>
+    </div>
+    
+    <p style="margin-top: 2rem; font-size: 0.95rem; color: #777;">
+      * Se um traço é desbloqueado por conquista, siga as condições especificadas para obtê-lo de forma natural, sem o Trait Editor.
     </p>
   </div>
 
   <!-- Áudio para clique -->
-  <audio id="click-sound" src="data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg" preload="auto"></audio>
+  <audio id="click-sound" src="data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg" preload="auto"></audio>
 
   <script>
-    // Controle de som e efeito de clique
+    // Efeitos de som e animação no clique
     const clickSound = document.getElementById("click-sound");
     document.querySelectorAll(".trait input[type='checkbox']").forEach(checkbox => {
       checkbox.addEventListener("change", function() {
-        // Toca o som ao clicar
         clickSound.currentTime = 0;
         clickSound.play();
-        // Adiciona a classe para efeito visual
         const traitDiv = this.closest(".trait");
         traitDiv.classList.add("clicked");
-        setTimeout(() => { traitDiv.classList.remove("clicked"); }, 400);
+        setTimeout(() => traitDiv.classList.remove("clicked"), 400);
       });
     });
 
     // Filtro por categoria
-    const filterButtons = document.querySelectorAll(".menu button");
+    const filterButtons = document.querySelectorAll(".filtro button");
     const traits = document.querySelectorAll(".trait");
     filterButtons.forEach(btn => {
       btn.addEventListener("click", function() {
@@ -388,25 +437,25 @@
       });
     });
 
-    // Acessibilidade: Modo Escuro
+    // Modo Escuro
     const toggleDarkBtn = document.getElementById("toggle-dark");
     toggleDarkBtn.addEventListener("click", function() {
       document.body.classList.toggle("dark");
       this.textContent = document.body.classList.contains("dark") ? "Modo Claro" : "Modo Escuro";
     });
 
-    // Acessibilidade: Controles de Fonte
-    let fontSize = 100; // em porcentagem
+    // Controle de tamanho da fonte
+    let fontSize = 100;
     document.getElementById("font-inc").addEventListener("click", function() {
       fontSize += 10;
       document.body.style.fontSize = fontSize + "%";
     });
     document.getElementById("font-dec").addEventListener("click", function() {
-      if (fontSize > 60) { // mínimo 60%
+      if (fontSize > 60) {
         fontSize -= 10;
         document.body.style.fontSize = fontSize + "%";
       }
     });
   </script>
 </body>
-</html>q
+</html>
