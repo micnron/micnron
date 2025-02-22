@@ -1,89 +1,412 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Busque Ajuda</title>
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .red {
-            color: red;
-        }
-        .opcoes button {
-            margin: 5px;
-            padding: 10px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-        }
-        .opcoes button.selected {
-            background-color: #0056b3;
-        }
-        .hidden {
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Checklist de Traços dos Mobs – WorldBox</title>
+  <style>
+    /* Reset e configurações básicas */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+      padding: 1rem;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark {
+      background-color: #222;
+      color: #ddd;
+    }
+    header {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .menu, .acessibilidade {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .menu button,
+    .acessibilidade button {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .menu button:hover,
+    .acessibilidade button:hover {
+      background-color: #45a049;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark .container {
+      background-color: #333;
+      color: #ddd;
+    }
+    h1, h2 {
+      margin-bottom: 1rem;
+    }
+    h2 {
+      border-bottom: 2px solid #4CAF50;
+      padding-bottom: 0.5rem;
+      margin-top: 2rem;
+    }
+    p.instrucao {
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+    .trait {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background-color: #fafafa;
+      position: relative;
+      transition: background-color 0.3s;
+    }
+    body.dark .trait {
+      background-color: #444;
+      border-color: #555;
+    }
+    .trait.clicked {
+      animation: flash 0.4s ease-out;
+    }
+    @keyframes flash {
+      0% { background-color: #ffffcc; }
+      100% { background-color: inherit; }
+    }
+    .trait-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .trait-header input[type="checkbox"] {
+      margin-right: 0.75rem;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+    .trait-header label {
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .trait-details {
+      margin-left: 1.9rem;
+      font-size: 0.9rem;
+    }
+    .trait-details p {
+      margin-bottom: 0.3rem;
+    }
+    .conquista {
+      color: #E91E63;
+      font-style: italic;
+    }
+    /* Controles de fonte */
+    .font-controls {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .font-controls span {
+      font-size: 0.9rem;
+    }
+    @media (max-width: 600px) {
+      .trait-details { margin-left: 1.5rem; }
+      nav { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1><span class="red">B</span>USQUE <span class="red">A</span>JUDA. <span class="red">C</span>OM</h1>
-        </header>
-        <section class="atendimento">
-            <h2>Como prefere ser atendido?</h2>
-            <div class="opcoes">
-                <button class="opcao" id="remoto">Remoto</button>
-                <button class="opcao" id="presencial">Presencial</button>
-            </div>
-            <div id="local-container" class="hidden">
-                <input type="text" placeholder="Escolha o local" id="local">
-            </div>
-        </section>
-        <section class="tipo">
-            <h2>Qual tipo de atendimento?</h2>
-            <div class="opcoes">
-                <button class="opcao" id="medico">Médico</button>
-                <button class="opcao" id="psiquiatra">Psiquiatra</button>
-                <button class="opcao" id="psicologo">Psicólogo</button>
-            </div>
-        </section>
-        <section class="horario">
-            <h2>Horário da consulta:</h2>
-            <input type="time" id="horario">
-        </section>
-        <section class="contato">
-            <h2>DISQUE <span class="red">188</span> para <span class="red">APOIO IMEDIATO</span> 24 horas</h2>
-        </section>
+  <header>
+    <h1>Checklist de Traços dos Mobs – WorldBox</h1>
+  </header>
+
+  <!-- Menu de Filtro e Acessibilidade -->
+  <nav>
+    <div class="menu">
+      <button data-filter="todos">Todos</button>
+      <button data-filter="corpo">Traços de Corpo</button>
+      <button data-filter="mente">Traços de Mente</button>
+      <button data-filter="espirito">Traços de Espírito</button>
+      <button data-filter="adquiridos">Traços Adquiridos</button>
+      <button data-filter="divertidos">Traços Divertidos</button>
+      <button data-filter="miscelaneos">Traços Miscelâneos</button>
+      <button data-filter="especiais">Traços Especiais</button>
     </div>
-    <script>
-        document.querySelectorAll('.opcao').forEach(button => {
-            button.addEventListener('click', () => {
-                if (button.id === 'presencial') {
-                    document.getElementById('local-container').classList.remove('hidden');
-                } else if (button.id === 'remoto') {
-                    document.getElementById('local-container').classList.add('hidden');
-                }
-                button.classList.toggle('selected');
-            });
+    <div class="acessibilidade">
+      <button id="toggle-dark">Modo Escuro</button>
+      <div class="font-controls">
+        <span>Fonte:</span>
+        <button id="font-dec">A-</button>
+        <button id="font-inc">A+</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" id="trait-container">
+    <p class="instrucao">
+      Abaixo segue uma lista (organizada por categoria) com os nomes dos traços (características) dos mobs em WorldBox – traduzidos para o português – e, quando o traço só pode ser obtido através de uma conquista, uma indicação de como fazer essa conquista.
+      <br><em>Lembre-se que muitos traços surgem naturalmente (por spawn ou herança) e que usar o Trait Editor (via Debug Menu) para “forçar” um traço não conta para as conquistas.</em>
+    </p>
+
+    <!-- Cada traço possui um atributo data-category -->
+    <!-- 1. Traços de Corpo -->
+    <h2>1. Traços de Corpo</h2>
+    
+    <div class="trait" data-category="corpo">
+      <div class="trait-header">
+        <input type="checkbox" id="sangue-acido">
+        <label for="sangue-acido">Sangue Ácido</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Ao morrer, o mob solta ácido em partículas.</p>
+        <p><strong>Desbloqueio:</strong> Exclusivo se vc completar a conquista <span class="conquista">"Let's not"</span> – use o poder de ácido para que criaturas morram soltando ácido.</p>
+      </div>
+    </div>
+    
+    <div class="trait" data-category="corpo">
+      <div class="trait-header">
+        <input type="checkbox" id="prova-acido">
+        <label for="prova-acido">Prova de Ácido</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Imunidade aos efeitos do ácido.</p>
+        <p><strong>Desbloqueio:</strong> Vinculado à conquista <span class="conquista">"Let's not"</span>.</p>
+      </div>
+    </div>
+    
+    <div class="trait" data-category="corpo">
+      <div class="trait-header">
+        <input type="checkbox" id="toque-acido">
+        <label for="toque-acido">Toque Ácido</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Chance de aplicar efeito ácido na área sempre que acionado.</p>
+        <p><strong>Desbloqueio:</strong> Depende de completar <span class="conquista">"Let's not"</span>.</p>
+      </div>
+    </div>
+    
+    <!-- (Outros traços de corpo – veja lista completa no exemplo anterior, cada um com data-category="corpo") -->
+    <!-- Apenas alguns exemplos para demonstrar -->
+    
+    <div class="trait" data-category="corpo">
+      <div class="trait-header">
+        <input type="checkbox" id="agil">
+        <label for="agil">Ágil</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Aumenta a velocidade de movimento e de ataque; diminui tamanho.</p>
+        <p><strong>Desbloqueio:</strong> Pode surgir aleatoriamente ou por herança.</p>
+      </div>
+    </div>
+    
+    <div class="trait" data-category="corpo">
+      <div class="trait-header">
+        <input type="checkbox" id="atraente">
+        <label for="atraente">Atraente</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Melhora a diplomacia e a interação com outros mobs.</p>
+        <p><strong>Desbloqueio:</strong> Adquirido naturalmente (chance baixa ou por herança).</p>
+      </div>
+    </div>
+    
+    <!-- Continue com os demais traços de corpo... -->
+    
+    <!-- 2. Traços de Mente -->
+    <h2>2. Traços de Mente</h2>
+    
+    <div class="trait" data-category="mente">
+      <div class="trait-header">
+        <input type="checkbox" id="ambicioso">
+        <label for="ambicioso">Ambicioso</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Aumenta atributos de expansão (mais cidades, maior área), mas diminui lealdade.</p>
+        <p><strong>Desbloqueio:</strong> Exclusivo se vc completar <span class="conquista">"Middle‑Earth"</span>.</p>
+      </div>
+    </div>
+    
+    <div class="trait" data-category="mente">
+      <div class="trait-header">
+        <input type="checkbox" id="contente">
+        <label for="contente">Contente</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Aumenta a lealdade e torna o mob mais pacífico.</p>
+        <p><strong>Desbloqueio:</strong> Adquirido naturalmente.</p>
+      </div>
+    </div>
+    
+    <!-- Continue com os demais traços de mente... -->
+    
+    <!-- 3. Traços de Espírito -->
+    <h2>3. Traços de Espírito</h2>
+    
+    <div class="trait" data-category="espirito">
+      <div class="trait-header">
+        <input type="checkbox" id="sede-sangue">
+        <label for="sede-sangue">Sede de Sangue</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Aumenta agressividade em combate, mas diminui lealdade e diplomacia.</p>
+        <p><strong>Desbloqueio:</strong> Exclusivo se vc completar <span class="conquista">"The Demon"</span> – o mob deve matar dragões, magos e reis.</p>
+      </div>
+    </div>
+    
+    <!-- Continue com os demais traços de espírito... -->
+    
+    <!-- 4. Traços Adquiridos -->
+    <h2>4. Traços Adquiridos</h2>
+    
+    <div class="trait" data-category="adquiridos">
+      <div class="trait-header">
+        <input type="checkbox" id="abençoado">
+        <label for="abençoado">Abençoado</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Aumenta dano, saúde, velocidade e outros atributos positivos.</p>
+        <p><strong>Desbloqueio:</strong> Concedido ao aplicar o poder de bênção no mob.</p>
+      </div>
+    </div>
+    
+    <!-- Continue com os demais traços adquiridos... -->
+    
+    <!-- 5. Traços Divertidos -->
+    <h2>5. Traços Divertidos</h2>
+    
+    <div class="trait" data-category="divertidos">
+      <div class="trait-header">
+        <input type="checkbox" id="bomba">
+        <label for="bomba">Bomba</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> O mob lança explosivos ocasionalmente.</p>
+        <p><strong>Desbloqueio:</strong> Pode ocorrer naturalmente ou via poderes.</p>
+      </div>
+    </div>
+    
+    <!-- 6. Traços Miscelâneos -->
+    <h2>6. Traços Miscelâneos</h2>
+    
+    <div class="trait" data-category="miscelaneos">
+      <div class="trait-header">
+        <input type="checkbox" id="pegadas-flores">
+        <label for="pegadas-flores">Pegadas de Flores</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Deixa rastros de flores onde o mob passa.</p>
+        <p><strong>Desbloqueio:</strong> Natural em mobs místicos (ex.: fadas ou druidas).</p>
+      </div>
+    </div>
+    
+    <!-- 7. Traços Especiais -->
+    <h2>7. Traços Especiais</h2>
+    
+    <div class="trait" data-category="especiais">
+      <div class="trait-header">
+        <input type="checkbox" id="barco">
+        <label for="barco">Barco</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Exclusivo de objetos do tipo barco; impede certos traços opostos.</p>
+        <p><strong>Desbloqueio:</strong> Presente automaticamente.</p>
+      </div>
+    </div>
+    
+    <div class="trait" data-category="especiais">
+      <div class="trait-header">
+        <input type="checkbox" id="nascido-milagre">
+        <label for="nascido-milagre">Nascido de Milagre</label>
+      </div>
+      <div class="trait-details">
+        <p><strong>Efeito:</strong> Indica que o mob apareceu de forma milagrosa.</p>
+        <p><strong>Desbloqueio:</strong> Ocorre em spawns especiais; não pode ser forçado.</p>
+      </div>
+    </div>
+    
+    <!-- Final da lista -->
+    <p style="margin-top: 2rem; font-size: 0.8rem; color: #777;">
+      * Se um traço é desbloqueado por conquista, siga as condições descritas para obtê‑lo de forma natural, sem usar o Trait Editor.
+    </p>
+  </div>
+
+  <!-- Áudio para clique -->
+  <audio id="click-sound" src="data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg" preload="auto"></audio>
+
+  <script>
+    // Controle de som e efeito de clique
+    const clickSound = document.getElementById("click-sound");
+    document.querySelectorAll(".trait input[type='checkbox']").forEach(checkbox => {
+      checkbox.addEventListener("change", function() {
+        // Toca o som ao clicar
+        clickSound.currentTime = 0;
+        clickSound.play();
+        // Adiciona a classe para efeito visual
+        const traitDiv = this.closest(".trait");
+        traitDiv.classList.add("clicked");
+        setTimeout(() => { traitDiv.classList.remove("clicked"); }, 400);
+      });
+    });
+
+    // Filtro por categoria
+    const filterButtons = document.querySelectorAll(".menu button");
+    const traits = document.querySelectorAll(".trait");
+    filterButtons.forEach(btn => {
+      btn.addEventListener("click", function() {
+        const filter = this.getAttribute("data-filter");
+        traits.forEach(trait => {
+          if (filter === "todos" || trait.getAttribute("data-category") === filter) {
+            trait.style.display = "block";
+          } else {
+            trait.style.display = "none";
+          }
         });
-    </script>
+      });
+    });
+
+    // Acessibilidade: Modo Escuro
+    const toggleDarkBtn = document.getElementById("toggle-dark");
+    toggleDarkBtn.addEventListener("click", function() {
+      document.body.classList.toggle("dark");
+      this.textContent = document.body.classList.contains("dark") ? "Modo Claro" : "Modo Escuro";
+    });
+
+    // Acessibilidade: Controles de Fonte
+    let fontSize = 100; // em porcentagem
+    document.getElementById("font-inc").addEventListener("click", function() {
+      fontSize += 10;
+      document.body.style.fontSize = fontSize + "%";
+    });
+    document.getElementById("font-dec").addEventListener("click", function() {
+      if (fontSize > 60) { // mínimo 60%
+        fontSize -= 10;
+        document.body.style.fontSize = fontSize + "%";
+      }
+    });
+  </script>
 </body>
 </html>
