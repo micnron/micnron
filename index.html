@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+9<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -33,7 +33,7 @@
         <!-- Imagem ilustrativa -->
         <img 
           src="imagens/ilustracao-esquerda.png" 
-          alt="Pessoa segurando um coração ao lado de um balde com um cérebro" 
+          alt= tenho que colocar ainda
           class="ilustracao"
         >
       </section>
@@ -86,7 +86,7 @@
         <!-- Imagem ilustrativa -->
         <img 
           src="imagens/ilustracao-direita.png" 
-          alt="Pessoa oferecendo um coração ao lado de um balde com um cérebro" 
+          alt="tenho que colocar ainda" 
           class="ilustracao"
         >
       </section>
@@ -95,10 +95,41 @@
 
   <!-- Rodapé -->
   <footer>
-    <p>Condições e suporte | Criado com ♥</p>
+    <p>Condições e suporte</p>
   </footer>
 
   <!-- Script para funcionalidades de acessibilidade -->
   <script src="script.js"></script>
 </body>
 </html>
+// Seleciona os botões e variáveis que vamos manipular
+const toggleDarkModeBtn = document.getElementById('toggleDarkMode');
+const increaseFontBtn = document.getElementById('increaseFont');
+const decreaseFontBtn = document.getElementById('decreaseFont');
+
+let isDarkMode = false;
+let currentFontSize = 16;
+
+// Alternar modo escuro/claro
+toggleDarkModeBtn.addEventListener('click', () => {
+  isDarkMode = !isDarkMode;
+  document.body.classList.toggle('dark-mode', isDarkMode);
+
+  // Ajusta o atributo aria-pressed para acessibilidade
+  toggleDarkModeBtn.setAttribute('aria-pressed', isDarkMode.toString());
+});
+
+// Aumentar fonte
+increaseFontBtn.addEventListener('click', () => {
+  currentFontSize += 2;
+  document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
+});
+
+// Diminuir fonte
+decreaseFontBtn.addEventListener('click', () => {
+  currentFontSize -= 2;
+  if (currentFontSize < 10) {
+    currentFontSize = 10; // tamanho mínimo para não ficar ilegível
+  }
+  document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
+});
