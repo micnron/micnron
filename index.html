@@ -1,136 +1,272 @@
-9<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Busque Ajuda</title>
-  <!-- Vincula o arquivo de estilos -->
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #FFDD00; /* Fundo amarelo */
+    }
+
+    /* Contêiner principal com bordas pretas nas laterais */
+    .container {
+      display: flex;
+      flex-direction: row;
+      border-left: 5px solid #000;  /* Borda esquerda grossa */
+      border-right: 5px solid #000; /* Borda direita grossa */
+      margin: 0 auto;
+      max-width: 1200px; /* Largura máxima */
+      min-height: 100vh; /* Preenche toda a tela verticalmente */
+      position: relative; /* Para posicionar imagens no canto se quiser */
+    }
+
+    /* Coluna esquerda, centro, direita */
+    .left-col, .center-col, .right-col {
+      flex: 1; /* Cada coluna ocupa 1 parte do espaço */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px;
+    }
+
+    /* Borda divisória entre colunas */
+    .left-col {
+      border-right: 2px solid #000;
+    }
+    .center-col {
+      border-right: 2px solid #000;
+    }
+    /* .right-col não precisa de borda à direita pois já tem a borda externa */
+
+    /* Títulos e textos */
+    .left-col h1 {
+      font-size: 2rem;
+      line-height: 1.3;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .left-col h1 .red {
+      color: red;
+    }
+    .center-col h2 {
+      font-size: 1.2rem;
+      margin: 15px 0;
+      font-weight: bold;
+      text-align: center;
+    }
+    .right-col h2 {
+      font-size: 1.4rem;
+      text-align: center;
+      line-height: 1.3;
+      margin-bottom: 20px;
+    }
+    .right-col .red {
+      color: red;
+    }
+
+    /* Botões de opção */
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .option-btn {
+      background-color: #fff;
+      border: 2px solid #000;
+      border-radius: 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.2s, color 0.2s;
+      text-transform: lowercase; /* igual ao seu design (remoto, presencial, etc.) */
+    }
+    .option-btn.selected {
+      background-color: #000;
+      color: #fff;
+    }
+
+    /* Campo para local (mostrado ao clicar em presencial) */
+    #localInput {
+      display: none; /* só aparece se presencial estiver selecionado */
+      margin: 10px 0;
+    }
+    #localInput input {
+      padding: 5px;
+      font-size: 1rem;
+      width: 200px;
+      border: 2px solid #000;
+      border-radius: 5px;
+    }
+
+    /* Campo de horário */
+    .time-input {
+      margin-bottom: 20px;
+    }
+    .time-input input {
+      padding: 5px;
+      font-size: 1rem;
+      border: 2px solid #000;
+      border-radius: 5px;
+    }
+
+    /* Imagens dos personagens no rodapé (opcional) */
+    .char-left, .char-right {
+      position: absolute;
+      bottom: 0;
+      width: 120px;
+      height: auto;
+    }
+    .char-left {
+      left: 0;
+    }
+    .char-right {
+      right: 0;
+    }
+
+    /* Responsividade: empilhar colunas no mobile */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        border-left: none;
+        border-right: none;
+        border-top: 5px solid #000;
+        border-bottom: 5px solid #000;
+      }
+      .left-col, .center-col, .right-col {
+        border-right: none;
+        border-bottom: 2px solid #000;
+      }
+      .right-col {
+        border-bottom: none;
+      }
+      /* Ajuste das imagens para não ficarem fora de lugar no mobile */
+      .char-left, .char-right {
+        display: none; /* ou ajuste se quiser outro posicionamento */
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- Link para pular direto ao conteúdo principal (acessibilidade) -->
-  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
-  
-  <!-- Barra de ferramentas de acessibilidade -->
-  <header>
-    <nav>
-      <!-- Botão de alternar modo escuro/claro -->
-      <button id="toggleDarkMode" aria-pressed="false" aria-label="Alternar modo escuro">
-        Modo Escuro
-      </button>
-      <!-- Botões para aumentar/diminuir fonte -->
-      <button id="increaseFont" aria-label="Aumentar tamanho da fonte">A+</button>
-      <button id="decreaseFont" aria-label="Diminuir tamanho da fonte">A-</button>
-    </nav>
-  </header>
 
-  <!-- Conteúdo principal -->
-  <main id="main-content">
-    <div class="container">
-      <!-- Coluna da esquerda -->
-      <section class="left-col">
-        <h1>Busque<br>Ajuda.<br>Com</h1>
-        <!-- Imagem ilustrativa -->
-        <img 
-          src="imagens/ilustracao-esquerda.png" 
-          alt= tenho que colocar ainda
-          class="ilustracao"
-        >
-      </section>
+  <div class="container">
 
-      <!-- Coluna central -->
-      <section class="center-col">
-        <h2>Como prefere ser atendido?</h2>
-        <div class="option">
-          <input type="radio" name="atendimento" id="remoto" value="remoto">
-          <label for="remoto">remoto</label>
-        </div>
-        <div class="option">
-          <input type="radio" name="atendimento" id="presencial" value="presencial">
-          <label for="presencial">presencial</label>
-          <!-- Campo para inserir o local -->
-          <input 
-            type="text" 
-            placeholder="Escolha o local" 
-            aria-label="Escolha o local"
-          >
-        </div>
-
-        <h2>Qual tipo de atendimento?</h2>
-        <div class="option">
-          <input type="radio" name="tipo" id="medico" value="medico">
-          <label for="medico">médico</label>
-        </div>
-        <div class="option">
-          <input type="radio" name="tipo" id="psiquiatra" value="psiquiatra">
-          <label for="psiquiatra">psiquiatra</label>
-        </div>
-        <div class="option">
-          <input type="radio" name="tipo" id="psicologo" value="psicologo">
-          <label for="psicologo">psicólogo</label>
-        </div>
-
-        <h2>Horário da consulta:</h2>
-        <!-- Input de horário -->
-        <input type="time" aria-label="Selecione o horário da consulta">
-      </section>
-
-      <!-- Coluna da direita -->
-      <section class="right-col">
-        <h2>
-          Disque <span class="highlight">188</span> 
-          <br>para<br> 
-          Apoio Imediato 
-          <br><small>24 horas</small>
-        </h2>
-        <!-- Imagem ilustrativa -->
-        <img 
-          src="imagens/ilustracao-direita.png" 
-          alt="tenho que colocar ainda" 
-          class="ilustracao"
-        >
-      </section>
+    <!-- Coluna Esquerda -->
+    <div class="left-col">
+      <h1>
+        <span class="red">B</span>USQUE<br>
+        <span class="red">A</span>JUDA.<br>
+        <span class="red">C</span>OM
+      </h1>
+      <!-- Se quiser imagem na coluna esquerda, pode inserir aqui -->
+      <!-- <img src=\"URL_DA_SUA_IMAGEM\" alt=\"Ilustração\" style=\"width:150px;\"> -->
     </div>
-  </main>
 
-  <!-- Rodapé -->
-  <footer>
-    <p>Condições e suporte</p>
-  </footer>
+    <!-- Coluna Central -->
+    <div class="center-col">
+      <!-- COMO PREFERE SER ATENDIDO? -->
+      <h2>COMO PREFERE SER ATENDIDO?</h2>
+      <div class="options">
+        <button class="option-btn" id="btnRemoto">remoto</button>
+        <button class="option-btn" id="btnPresencial">presencial</button>
+      </div>
+      <div id="localInput">
+        <input type="text" placeholder="Escolha o local..." />
+      </div>
 
-  <!-- Script para funcionalidades de acessibilidade -->
-  <script src="script.js"></script>
+      <!-- QUAL TIPO DE ATENDIMENTO? -->
+      <h2>QUAL TIPO DE ATENDIMENTO?</h2>
+      <div class="options">
+        <button class="option-btn" id="btnMedico">médico</button>
+        <button class="option-btn" id="btnPsiquiatra">psiquiatra</button>
+        <button class="option-btn" id="btnPsicologo">psicólogo</button>
+      </div>
+
+      <!-- HORÁRIO DA CONSULTA -->
+      <h2>HORÁRIO DA CONSULTA:</h2>
+      <div class="time-input">
+        <input type="time" />
+      </div>
+    </div>
+
+    <!-- Coluna Direita -->
+    <div class="right-col">
+      <h2>
+        DISQUE <span class="red">188</span><br>
+        para <span class="red\">APOIO IMEDIATO</span><br>
+        24 horas
+      </h2>
+      <!-- Se quiser imagem na coluna direita, pode inserir aqui -->
+      <!-- <img src=\"URL_DA_SUA_IMAGEM\" alt=\"Ilustração\" style=\"width:150px;\"> -->
+    </div>
+
+    <!-- Imagens no rodapé (opcional, substitua pelos links das suas artes) -->
+    <img
+      class=\"char-left\"
+      src=\"https://via.placeholder.com/120x120/0000ff/ffffff?text=Personagem+Esq\"
+      alt=\"Personagem Esquerda\"
+    />
+    <img
+      class=\"char-right\"
+      src=\"https://via.placeholder.com/120x120/ff0000/ffffff?text=Personagem+Dir\"
+      alt=\"Personagem Direita\"
+    />
+  </div>
+
+  <script>
+    // Seletores dos botões
+    const btnRemoto = document.getElementById('btnRemoto');
+    const btnPresencial = document.getElementById('btnPresencial');
+    const localInput = document.getElementById('localInput');
+
+    // Botões de tipo de atendimento
+    const btnMedico = document.getElementById('btnMedico');
+    const btnPsiquiatra = document.getElementById('btnPsiquiatra');
+    const btnPsicologo = document.getElementById('btnPsicologo');
+
+    // Ao clicar em Remoto
+    btnRemoto.addEventListener('click', () => {
+      btnRemoto.classList.toggle('selected');
+      // Se clicar em remoto, esconde campo local
+      localInput.style.display = 'none';
+      // Desmarca presencial se estiver selecionado
+      if (btnPresencial.classList.contains('selected')) {
+        btnPresencial.classList.remove('selected');
+      }
+    });
+
+    // Ao clicar em Presencial
+    btnPresencial.addEventListener('click', () => {
+      btnPresencial.classList.toggle('selected');
+      // Se estiver selecionado, mostra o campo local
+      if (btnPresencial.classList.contains('selected')) {
+        localInput.style.display = 'block';
+        // Desmarca remoto se estiver selecionado
+        if (btnRemoto.classList.contains('selected')) {
+          btnRemoto.classList.remove('selected');
+        }
+      } else {
+        localInput.style.display = 'none';
+      }
+    });
+
+    // Cada botão de atendimento (médico, psiquiatra, psicólogo) pode ser selecionado/deselecionado
+    [btnMedico, btnPsiquiatra, btnPsicologo].forEach((btn) => {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('selected');
+      });
+    });
+  </script>
 </body>
 </html>
-
-// Seleciona os botões e variáveis que vamos manipular
-const toggleDarkModeBtn = document.getElementById('toggleDarkMode');
-const increaseFontBtn = document.getElementById('increaseFont');
-const decreaseFontBtn = document.getElementById('decreaseFont');
-
-let isDarkMode = false;
-let currentFontSize = 16;
-
-// Alternar modo escuro/claro
-toggleDarkModeBtn.addEventListener('click', () => {
-  isDarkMode = !isDarkMode;
-  document.body.classList.toggle('dark-mode', isDarkMode);
-
-  // Ajusta o atributo aria-pressed para acessibilidade
-  toggleDarkModeBtn.setAttribute('aria-pressed', isDarkMode.toString());
-});
-
-// Aumentar fonte
-increaseFontBtn.addEventListener('click', () => {
-  currentFontSize += 2;
-  document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
-});
-
-// Diminuir fonte
-decreaseFontBtn.addEventListener('click', () => {
-  currentFontSize -= 2;
-  if (currentFontSize < 10) {
-    currentFontSize = 10; // tamanho mínimo para não ficar ilegível
-  }
-  document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
-});
