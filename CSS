@@ -1,0 +1,31 @@
+// Seleciona os botões e variáveis que vamos manipular
+const toggleDarkModeBtn = document.getElementById('toggleDarkMode');
+const increaseFontBtn = document.getElementById('increaseFont');
+const decreaseFontBtn = document.getElementById('decreaseFont');
+
+let isDarkMode = false;
+let currentFontSize = 16;
+
+// Alternar modo escuro/claro
+toggleDarkModeBtn.addEventListener('click', () => {
+  isDarkMode = !isDarkMode;
+  document.body.classList.toggle('dark-mode', isDarkMode);
+
+  // Ajusta o atributo aria-pressed para acessibilidade
+  toggleDarkModeBtn.setAttribute('aria-pressed', isDarkMode.toString());
+});
+
+// Aumentar fonte
+increaseFontBtn.addEventListener('click', () => {
+  currentFontSize += 2;
+  document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
+});
+
+// Diminuir fonte
+decreaseFontBtn.addEventListener('click', () => {
+  currentFontSize -= 2;
+  if (currentFontSize < 10) {
+    currentFontSize = 10; // tamanho mínimo para não ficar ilegível
+  }
+  document.documentElement.style.setProperty('--font-size', currentFontSize + 'px');
+});
