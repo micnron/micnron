@@ -2,12 +2,103 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Checklist de Traços dos Mobs – WorldBox</title>
-  <!-- Importação de fontes modernas -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary-color: #4e3370; /* Roxo profundo */
-      --secondary-color: #d35400; /* Laranja queimado */
-      --accent-color: #e67e22; /* Laranja vibrante */
-      --bg-color:
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Busque Ajuda</title>
+  <!-- Vincula o arquivo de estilos -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Link para pular direto ao conteúdo principal (acessibilidade) -->
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+  
+  <!-- Barra de ferramentas de acessibilidade -->
+  <header>
+    <nav>
+      <!-- Botão de alternar modo escuro/claro -->
+      <button id="toggleDarkMode" aria-pressed="false" aria-label="Alternar modo escuro">
+        Modo Escuro
+      </button>
+      <!-- Botões para aumentar/diminuir fonte -->
+      <button id="increaseFont" aria-label="Aumentar tamanho da fonte">A+</button>
+      <button id="decreaseFont" aria-label="Diminuir tamanho da fonte">A-</button>
+    </nav>
+  </header>
+
+  <!-- Conteúdo principal -->
+  <main id="main-content">
+    <div class="container">
+      <!-- Coluna da esquerda -->
+      <section class="left-col">
+        <h1>Busque<br>Ajuda.<br>Com</h1>
+        <!-- Imagem ilustrativa -->
+        <img 
+          src="imagens/ilustracao-esquerda.png" 
+          alt="Pessoa segurando um coração ao lado de um balde com um cérebro" 
+          class="ilustracao"
+        >
+      </section>
+
+      <!-- Coluna central -->
+      <section class="center-col">
+        <h2>Como prefere ser atendido?</h2>
+        <div class="option">
+          <input type="radio" name="atendimento" id="remoto" value="remoto">
+          <label for="remoto">remoto</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="atendimento" id="presencial" value="presencial">
+          <label for="presencial">presencial</label>
+          <!-- Campo para inserir o local -->
+          <input 
+            type="text" 
+            placeholder="Escolha o local" 
+            aria-label="Escolha o local"
+          >
+        </div>
+
+        <h2>Qual tipo de atendimento?</h2>
+        <div class="option">
+          <input type="radio" name="tipo" id="medico" value="medico">
+          <label for="medico">médico</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="tipo" id="psiquiatra" value="psiquiatra">
+          <label for="psiquiatra">psiquiatra</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="tipo" id="psicologo" value="psicologo">
+          <label for="psicologo">psicólogo</label>
+        </div>
+
+        <h2>Horário da consulta:</h2>
+        <!-- Input de horário -->
+        <input type="time" aria-label="Selecione o horário da consulta">
+      </section>
+
+      <!-- Coluna da direita -->
+      <section class="right-col">
+        <h2>
+          Disque <span class="highlight">188</span> 
+          <br>para<br> 
+          Apoio Imediato 
+          <br><small>24 horas</small>
+        </h2>
+        <!-- Imagem ilustrativa -->
+        <img 
+          src="imagens/ilustracao-direita.png" 
+          alt="Pessoa oferecendo um coração ao lado de um balde com um cérebro" 
+          class="ilustracao"
+        >
+      </section>
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer>
+    <p>Condições e suporte | Criado com ♥</p>
+  </footer>
+
+  <!-- Script para funcionalidades de acessibilidade -->
+  <script src="script.js"></script>
+</body>
+</html>
