@@ -3,266 +3,208 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Título</title>
+  <title>Trabalho de Escola</title>
   <style>
-    /* Reset básico */
+    /* Reset */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    /* Variáveis de cores */
+    :root {
+      --bg-claro: #ffffff;
+      --texto-claro: #000000;
+      --header-claro: #e0e0e0;
+      --link-claro: #333333;
+
+      --bg-escuro: #121212;
+      --texto-escuro: #ffffff;
+      --header-escuro: #1e1e1e;
+      --link-escuro: #bbbbbb;
+    }
+
+    /* Estilos gerais */
     body {
       font-family: Arial, sans-serif;
-      background-color: #FFDD00; /* Fundo amarelo */
-    }
-
-    /* Contêiner principal com bordas pretas nas laterais */
-    .container {
-      display: flex;
-      flex-direction: row;
-      border-left: 5px solid #000;  /* Borda esquerda grossa */
-      border-right: 5px solid #000; /* Borda direita grossa */
-      margin: 0 auto;
-      max-width: 1200px; /* Largura máxima */
-      min-height: 100vh; /* Preenche toda a tela verticalmente */
-      position: relative; /* Para posicionar imagens no canto se quiser */
-    }
-
-    /* Coluna esquerda, centro, direita */
-    .left-col, .center-col, .right-col {
-      flex: 1; /* Cada coluna ocupa 1 parte do espaço */
+      background-color: var(--bg-claro);
+      color: var(--texto-claro);
+      transition: background 0.3s, color 0.3s;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
+    }
+
+    /* Cabeçalho */
+    header {
+      background-color: var(--header-claro);
       padding: 20px;
-    }
-
-    /* Borda divisória entre colunas */
-    .left-col {
-      border-right: 2px solid #000;
-    }
-    .center-col {
-      border-right: 2px solid #000;
-    }
-    /* .right-col não precisa de borda à direita pois já tem a borda externa */
-
-    /* Títulos e textos */
-    .left-col h1 {
-      font-size: 2rem;
-      line-height: 1.3;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .left-col h1 .red {
-      color: red;
-    }
-    .center-col h2 {
-      font-size: 1.2rem;
-      margin: 15px 0;
-      font-weight: bold;
-      text-align: center;
-    }
-    .right-col h2 {
-      font-size: 1.4rem;
-      text-align: center;
-      line-height: 1.3;
-      margin-bottom: 20px;
-    }
-    .right-col .red {
-      color: red;
-    }
-
-    /* Botões de opção */
-    .options {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 15px;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s;
     }
-    .option-btn {
-      background-color: #fff;
-      border: 2px solid #000;
-      border-radius: 5px;
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--link-claro);
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+    }
+    nav a {
+      text-decoration: none;
+      font-size: 1rem;
+      color: var(--link-claro);
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Botão modo escuro */
+    .dark-mode-toggle {
       padding: 8px 12px;
       cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.2s, color 0.2s;
-      text-transform: lowercase; /* igual ao seu design (remoto, presencial, etc.) */
-    }
-    .option-btn.selected {
-      background-color: #000;
+      border: none;
+      background: #333;
       color: #fff;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      transition: background 0.3s;
+    }
+    .dark-mode-toggle:hover {
+      background: #555;
     }
 
-    /* Campo para local (mostrado ao clicar em presencial) */
-    #localInput {
-      display: none; /* só aparece se presencial estiver selecionado */
-      margin: 10px 0;
+    /* Conteúdo principal */
+    main {
+      flex: 1;
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
     }
-    #localInput input {
-      padding: 5px;
-      font-size: 1rem;
-      width: 200px;
-      border: 2px solid #000;
-      border-radius: 5px;
-    }
-
-    /* Campo de horário */
-    .time-input {
+    main h1 {
+      font-size: 2.2rem;
       margin-bottom: 20px;
+      text-align: center;
     }
-    .time-input input {
-      padding: 5px;
-      font-size: 1rem;
-      border: 2px solid #000;
-      border-radius: 5px;
+    main h2 {
+      font-size: 1.6rem;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 5px;
     }
-
-    /* Imagens dos personagens no rodapé (opcional) */
-    .char-left, .char-right {
-      position: absolute;
-      bottom: 0;
-      width: 120px;
-      height: auto;
+    main p {
+      margin-bottom: 15px;
     }
-    .char-left {
-      left: 0;
-    }
-    .char-right {
-      right: 0;
+    main ul {
+      margin-left: 20px;
+      margin-bottom: 15px;
+      list-style-type: disc;
     }
 
-    /* Responsividade: empilhar colunas no mobile */
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        border-left: none;
-        border-right: none;
-        border-top: 5px solid #000;
-        border-bottom: 5px solid #000;
-      }
-      .left-col, .center-col, .right-col {
-        border-right: none;
-        border-bottom: 2px solid #000;
-      }
-      .right-col {
-        border-bottom: none;
-      }
-      /* Ajuste das imagens para não ficarem fora de lugar no mobile */
-      .char-left, .char-right {
-        display: none; /* ou ajuste se quiser outro posicionamento */
-      }
+    /* Rodapé */
+    footer {
+      background-color: var(--header-claro);
+      text-align: center;
+      padding: 15px;
+      transition: background 0.3s;
+    }
+    footer p {
+      font-size: 0.9rem;
+      color: var(--link-claro);
+    }
+
+    /* Modo escuro */
+    .dark-mode {
+      background-color: var(--bg-escuro);
+      color: var(--texto-escuro);
+    }
+    .dark-mode header,
+    .dark-mode footer {
+      background-color: var(--header-escuro);
+    }
+    .dark-mode .logo,
+    .dark-mode nav a,
+    .dark-mode footer p {
+      color: var(--link-escuro);
+    }
+    .dark-mode .dark-mode-toggle {
+      background: #bbb;
+      color: #000;
     }
   </style>
 </head>
 <body>
+  <header>
+    <div class="logo">Título do Trabalho</div>
+    <nav>
+      <ul>
+        <li><a href="#">Início</a></li>
+        <li><a href="#">Capítulo 1</a></li>
+        <li><a href="#">Capítulo 2</a></li>
+        <li><a href="#">Referências</a></li>
+      </ul>
+    </nav>
+    <button class="dark-mode-toggle">Modo Escuro</button>
+  </header>
 
-  <div class="container">
+  <main>
+    <h1>TÍTULO PRINCIPAL</h1>
+    <p>
+      Este é um texto de exemplo que serve como modelo para um trabalho de escola.
+      Aqui você pode descrever o tema geral, apresentar o objetivo do trabalho e dar uma introdução breve ao assunto.
+    </p>
 
-    <!-- Coluna Esquerda -->
-    <div class="left-col">
-      <h1>
-        <span class="red">B</span>USQUE<br>
-        <span class="red">A</span>JUDA.<br>
-        <span class="red">C</span>OM
-      </h1>
-      <!-- Se quiser imagem na coluna esquerda, pode inserir aqui -->
-      <!-- <img src=\"URL_DA_SUA_IMAGEM\" alt=\"Ilustração\" style=\"width:150px;\"> -->
-    </div>
+    <h2>1. Introdução</h2>
+    <p>
+      Na introdução, explique o contexto do tema, a importância do estudo e quais perguntas ou hipóteses serão abordadas.
+      Utilize este espaço para situar o leitor e apresentar o propósito do trabalho.
+    </p>
 
-    <!-- Coluna Central -->
-    <div class="center-col">
-      <!-- COMO PREFERE SER ATENDIDO? -->
-      <h2>COMO PREFERE SER ATENDIDO?</h2>
-      <div class="options">
-        <button class="option-btn" id="btnRemoto">remoto</button>
-        <button class="option-btn" id="btnPresencial">presencial</button>
-      </div>
-      <div id="localInput">
-        <input type="text" placeholder="Escolha o local..." />
-      </div>
+    <h2>2. Desenvolvimento</h2>
+    <p>
+      No desenvolvimento, organize seu conteúdo em seções ou tópicos. Por exemplo:
+    </p>
+    <ul>
+      <li><strong>2.1 Tópico A:</strong> Descreva um aspecto específico do tema, apresente definições e exemplos.</li>
+      <li><strong>2.2 Tópico B:</strong> Explore outro ponto relevante, com dados, estatísticas ou citações (se houver).</li>
+      <li><strong>2.3 Tópico C:</strong> Analise resultados, compare ideias e mostre argumentos apoiados em referências.</li>
+    </ul>
+    <p>
+      Sinta-se à vontade para inserir imagens, tabelas ou gráficos, caso necessário, utilizando tags HTML adequadas.
+    </p>
 
-      <!-- QUAL TIPO DE ATENDIMENTO? -->
-      <h2>QUAL TIPO DE ATENDIMENTO?</h2>
-      <div class="options">
-        <button class="option-btn" id="btnMedico">médico</button>
-        <button class="option-btn" id="btnPsiquiatra">psiquiatra</button>
-        <button class="option-btn" id="btnPsicologo">psicólogo</button>
-      </div>
+    <h2>3. Conclusão</h2>
+    <p>
+      Na conclusão, resuma os pontos principais, responda às perguntas iniciais e apresente considerações finais.
+      Você pode sugerir desdobramentos futuros ou indicar limitações do estudo.
+    </p>
 
-      <!-- HORÁRIOs -->
-      <h2>HORÁRIos:</h2>
-      <div class="time-input">
-        <input type="time" />
-      </div>
-    </div>
+    <h2>Referências</h2>
+    <p>
+      • Autor A. (2022). Título do Livro. Editora X.<br>
+      • Autor B. (2021). Artigo sobre o tema. Jornal Y.<br>
+      • Site Z. (2023). “Título da Página”. Disponível em: https://exemplo.com
+    </p>
+  </main>
 
-    <!-- Coluna Direita -->
-    <div class="right-col">
-      <h2>
-
-      <!-- Se quiser imagem na coluna direita, pode inserir aqui -->
-      <!-- <img src=\"URL_DA_SUA_IMAGEM\" alt=\"Ilustração\" style=\"width:150px;\"> -->
-    </div>
-
-    <!-- Imagens no rodapé (opcional, substitua pelos links das suas artes) -->
-    <img
-      class=\"char-left\"
-      src=\"https://via.placeholder.com/120x120/0000ff/ffffff?text=Personagem+Esq\"
-      alt=\"Personagem Esquerda\"
-    />
-    <img
-      class=\"char-right\"
-      src=\"https://via.placeholder.com/120x120/ff0000/ffffff?text=Personagem+Dir\"
-      alt=\"Personagem Direita\"
-    />
-  </div>
+  <footer>
+    <p>© 2025 Seu Nome. Todos os direitos reservados.</p>
+  </footer>
 
   <script>
-    // Seletores dos botões
-    const btnRemoto = document.getElementById('btnRemoto');
-    const btnPresencial = document.getElementById('btnPresencial');
-    const localInput = document.getElementById('localInput');
-
-    // Botões de tipo de atendimento
-    const btn2 = document.getElementById('btnMedico');
-    const btn1 = document.getElementById('btnPsiquiatra');
-    const btn3 = document.getElementById('btnPsicologo');
-
-    // Ao clicar em Remoto
-    btnRemoto.addEventListener('click', () => {
-      btnRemoto.classList.toggle('selected');
-      // Se clicar em remoto, esconde campo local
-      localInput.style.display = 'none';
-      // Desmarca presencial se estiver selecionado
-      if (btnPresencial.classList.contains('selected')) {
-        btnPresencial.classList.remove('selected');
-      }
-    });
-
-    // Ao clicar em Presencial
-    btnPresencial.addEventListener('click', () => {
-      btnPresencial.classList.toggle('selected');
-      // Se estiver selecionado, mostra o campo local
-      if (btnPresencial.classList.contains('selected')) {
-        localInput.style.display = 'block';
-        // Desmarca remoto se estiver selecionado
-        if (btnRemoto.classList.contains('selected')) {
-          btnRemoto.classList.remove('selected');
-        }
-      } else {
-        localInput.style.display = 'none';
-      }
-    });
-
-    // Cada botão de atendimento (médico, psiquiatra, psicólogo) pode ser selecionado/deselecionado
-    [btn2, btn1, btn3].forEach((btn) => {
-      btn.addEventListener('click', () => {
-        btn.classList.toggle('selected');
-      });
+    document.querySelector(".dark-mode-toggle").addEventListener("click", function() {
+      document.body.classList.toggle("dark-mode");
+      this.textContent = document.body.classList.contains("dark-mode")
+        ? "Modo Claro"
+        : "Modo Escuro";
     });
   </script>
 </body>
