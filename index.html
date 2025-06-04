@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Busque Ajuda</title>
+  <title>Título</title>
   <style>
     /* Reset básico */
     * {
@@ -193,8 +193,8 @@
         <button class="option-btn" id="btnPsicologo">psicólogo</button>
       </div>
 
-      <!-- HORÁRIO DA CONSULTA -->
-      <h2>HORÁRIO DA CONSULTA:</h2>
+      <!-- HORÁRIOs -->
+      <h2>HORÁRIos:</h2>
       <div class="time-input">
         <input type="time" />
       </div>
@@ -203,10 +203,7 @@
     <!-- Coluna Direita -->
     <div class="right-col">
       <h2>
-        DISQUE <span class="red">188</span><br>
-        para <span class="red\">APOIO IMEDIATO</span><br>
-        24 horas
-      </h2>
+
       <!-- Se quiser imagem na coluna direita, pode inserir aqui -->
       <!-- <img src=\"URL_DA_SUA_IMAGEM\" alt=\"Ilustração\" style=\"width:150px;\"> -->
     </div>
@@ -231,9 +228,9 @@
     const localInput = document.getElementById('localInput');
 
     // Botões de tipo de atendimento
-    const btnMedico = document.getElementById('btnMedico');
-    const btnPsiquiatra = document.getElementById('btnPsiquiatra');
-    const btnPsicologo = document.getElementById('btnPsicologo');
+    const btn2 = document.getElementById('btnMedico');
+    const btn1 = document.getElementById('btnPsiquiatra');
+    const btn3 = document.getElementById('btnPsicologo');
 
     // Ao clicar em Remoto
     btnRemoto.addEventListener('click', () => {
@@ -262,7 +259,7 @@
     });
 
     // Cada botão de atendimento (médico, psiquiatra, psicólogo) pode ser selecionado/deselecionado
-    [btnMedico, btnPsiquiatra, btnPsicologo].forEach((btn) => {
+    [btn2, btn1, btn3].forEach((btn) => {
       btn.addEventListener('click', () => {
         btn.classList.toggle('selected');
       });
